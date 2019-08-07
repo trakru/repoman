@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+*.csv
+*.xlsx
+*.sql
+# OS generated files #
+Thumbs.db
