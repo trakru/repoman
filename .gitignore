@@ -7,3 +7,6 @@
 *.sql
 # OS generated files #
 Thumbs.db
+*.net
+*.txt
+*.api
