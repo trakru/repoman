@@ -18,8 +18,8 @@ write.csv(cmts_pa,"cmts-pa.csv")
 # cat cmtsmv.txt|while read file; do echo "Moving $file";mv ~/Documents/R/my-r-code/repoman/XPDR_2018010114/$file ~/Documents/R/my-r-code/repoman/XPDR_2018010114/newfolder; done^C
 # dos2unix cmtsmv.txt
 ##read the file
-#templog <- read_file("./data/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net")
-templog <- read.table("./data/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net", sep = "~", header = FALSE)
+#templog <- read_file("./data/XPDR/2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net")
+templog <- read.table("./data/XPDR/2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net", sep = "~", header = FALSE)
 
 #some renaming
 names(templog)[names(templog) == 'V1'] <- 'MAC address'
