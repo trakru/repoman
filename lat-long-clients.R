@@ -18,8 +18,8 @@ write.csv(cmts_pa,"cmts-pa.csv")
 # cat cmtsmv.txt|while read file; do echo "Moving $file";mv ~/Documents/R/my-r-code/repoman/XPDR_2018010114/$file ~/Documents/R/my-r-code/repoman/XPDR_2018010114/newfolder; done^C
 # dos2unix cmtsmv.txt
 ##read the file
-#templog <- read_file("C:/Users/thetr/Documents/R/my-r-code/repoman/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net")
-templog <- read.table("C:/Users/thetr/Documents/R/my-r-code/repoman/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net", sep = "~", header = FALSE)
+#templog <- read_file("./data/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net")
+templog <- read.table("./data/XPDR_2018010114/newfolder/acr01.49thst.pa.panjde.comcast.net", sep = "~", header = FALSE)
 
 #some renaming
 names(templog)[names(templog) == 'V1'] <- 'MAC address'
@@ -47,9 +47,37 @@ write.csv(templog, "acr01.49thst.pa.2018010114.csv")
 
 
 #some business logic for converting colors to warnings
-og_pa_new <- og_pa %>% mutate(status = case_when (V30 == "GREEN" & V32== "GREEN" ~ "ONLINE",
+df <- df %>% mutate(status = case_when (V30 == "GREEN" & V32== "GREEN" ~ "ONLINE",
                                                   V30 == "RED" & V32=="RED" ~ "OFFLINE",
                                                   TRUE ~ "WARNING"))
 
+#Pulling IPv6 address
+ipv6 <- data.frame(og_pa$IPv6.address,stringsAsFactors = FALSE) 
+
+for(i in 1:nrow(df))
+{
+  url <- paste0("http://api.db-ip.com/v2/",api,"/",df$IPv6.address[i])
+  # Print("url repoman @ work")
+  result <- fromJSON(url)
+  df$continentCode[i] <- as.character(result[2])
+  df$continentName[i] <- as.character(result[3])
+  df$countryCode[i] <- as.character(result[4])
+  df$countryName[i] <- as.character(result[5])
+  df$stateProv[i] <- as.character(result[12])
+  df$district[i] <- as.character(result[13])
+  df$city[i] <- as.character(result[14])
+  df$zipcode[i] <- as.character(result[16])
+  df$latitude [i] <- as.character(result[17])
+  df$longitude[i] <- as.character(result[18])
+  df$timeZone[i] <- as.character(result[20])
+  df$weatherCode <- as.character(result[21])
+}
 
 
+
+for(i in 1:10)
+{
+  url <- paste0("http://api.db-ip.com/v2/",api,"/",ipv6$og_pa.IPv6.address[i])
+  result <- fromJSON(url)
+  df$continentCode[i] <- as.character(result[2])
+}
