@@ -42,4 +42,14 @@ tempfile2 <- geocode(locations)
 templog$longitude <- tempfile2$lon
 templog$latitude <- tempfile2$lat
 
+#write final CSV
+write.csv(templog, "acr01.49thst.pa.2018010114.csv")
+
+
+#some business logic for converting colors to warnings
+og_pa_new <- og_pa %>% mutate(status = case_when (V30 == "GREEN" & V32== "GREEN" ~ "ONLINE",
+                                                  V30 == "RED" & V32=="RED" ~ "OFFLINE",
+                                                  TRUE ~ "WARNING"))
+
+
 
