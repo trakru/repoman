@@ -33,18 +33,12 @@ for(i in 1:nrow(df))
 
 write.csv(df,"cmts-locations-us-all.csv", row.names = FALSE)
 
+
+
 #ipdf2<-ipdf[101:200]
 #ipdf2_url <- paste0(ipdf2,collapse = ",")
 #url2 <- paste0("http://api.db-ip.com/v2/","aa24a1de20f1d6427938a0bf5cec066afa32f8a9","/",ipdf2_url)
 #json_cmts2 <- fromJSON(url2)
-
-
-
-
-
-
-
-
 #ipdf_url <- paste0(ipdf,collapse = ",")
 #url <- paste0("http://api.db-ip.com/v2/","aa24a1de20f1d6427938a0bf5cec066afa32f8a9","/",ipdf_url)
 #json_cmts <- fromJSON(url)
