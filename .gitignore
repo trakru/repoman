@@ -11,3 +11,5 @@ Thumbs.db
 *.net
 *.txt
 *.api
+*.Rproj
+data/
