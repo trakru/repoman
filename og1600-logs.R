@@ -22,4 +22,23 @@ df$DL <- as.integer(df$DL) #coercing NAs
 df$UL <- as.integer(df$UL) #coercing NAs
 df <- na.omit(df) #remove NAs
 
+df$datetime <- gsub("T","",df$datetime) #removing the annoying T
+df$datetime_f <- strptime(df$datetime,tz = "EST", format = "%Y%m%d%H%M%S") #datetime POSIX formatting
 
+#endgame
+df_dl$index <- format(round(df_dl$datetime_f, units="hours"), format="%Y-%m-%d %H:%M")
+list <- unique(df_dl$index)
+list_mac <- unique(df_dl$`MAC address`)
+library(reshape)
+dldata <- melt(df_dl, id=c('MAC address','index'))
+df_dl <- df_dl[,-3]
+timemeans <- cast(dldata, index~variable, mean)
+timesum <- cast(dldata, index~variable, sum)
+colnames(dldata)[colnames(dldata)=="MAC address"] <- "MACaddress"
+macmeans <- cast(dldata, MACaddress~variable, mean)
+macmeans$DL<- as.integer(macmeans$DL)
+macsum <- cast(dldata, MACaddress~variable, sum)
+write.csv(timesum, file = './data/final/reshape/timesum.csv')
+write.csv(timemeans, file = './data/final/reshape/timemeans.csv')
+write.csv(macsum, file = './data/final/reshape/macsum.csv')
+write.csv(macmeans, file = './data/final/reshape/macmeans.csv')
