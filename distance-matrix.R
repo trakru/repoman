@@ -12,7 +12,7 @@ for(i in 1:nrow(wyandotte))
 
 library(tidyverse)
 by_st <- wyandotte %>% group_by(Street) #filtering for address groups by street (North/South)
-by_st_23rd <- by_st %>% filter(Street== "23RD") %>% arrange(desc(distance)) #filtering only for 23rd street addresses
+by_st_23rd <- w %>% filter(Street== "23RD") %>% arrange(desc(distance..in.m.)) #filtering only for 23rd street addresses
 head(by_st_23rd$distance)
 tail(by_st_23rd$distance)
 
